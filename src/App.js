@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./style/App.css";
 function App() {
-  const [value, setValue] = useState();
 
   return (
     <div className="App">

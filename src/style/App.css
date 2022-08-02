@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *{
     margin:0;
     padding:0;
@@ -17,4 +18,25 @@
     margin-top: 10px;
     justify-content: space-between;
     align-items: center;
+=======
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+#root{
+    display: flex;
+    justify-content: center;
+}
+.App{
+    width: 800px;
+}
+.post{
+    display: flex;
+    padding: 15px;
+    border: 2px solid rgb(0, 162, 255);
+    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+>>>>>>> c6b891f957c3179481eb8de68cd1539ef2a71ff9
 }
