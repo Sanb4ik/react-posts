@@ -2,6 +2,7 @@ import React, {useState, useMemo} from "react";
 import "./style/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
+import PostFilter from "./components/PostFilter";
 import MySelect from "./components/UI/select/MySelect";
 import MyInput from "./components/UI/input/MyInput";
 function App() {
@@ -10,19 +11,19 @@ function App() {
     {id: 1, title: 'React', body: "descriptions"},
     {id: 2, title: 'JS', body: "escriptions"}
   ])
-  const [selectedSort, setSlectedSort] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
+
+const [filter,setFilter] = useState({sort:'', query: ''})
 
   const sortedPosts =  useMemo(() => {
-    if (selectedSort) { 
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    if (filter.sort) { 
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort].localeCompare))
     }
     return posts
-  },[selectedSort, setSlectedSort])
+  },[filter.sort, posts])
 
   const sortedAndSearchPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery))
-  },[searchQuery, sortedPosts])
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
+  },[filter.query, sortedPosts])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
@@ -30,32 +31,15 @@ function App() {
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
-  const sortPosts = (sort)=>{
-    console.log(sort)
-    setSlectedSort(sort)
-  }
 
   return (
     <div className="App">
       <PostForm create = {createPost}/>
       <hr style={{ border: '0.5px solid cornflowerblue'}} />
-      <div>
-        <MyInput
-          style={{ border: '0.5px solidCornflowerblue'}}
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search"
-        />
-        <MySelect 
-        defaultValue={'Sort by'}
-        value={selectedSort}
-        onChange= {sortPosts}
-          options={[
-            {value:'title', name:'by title'},
-            {value:'body', name:'by description'}
-          ]}
-        />
-      </div>
+      <PostFilter 
+        filter={filter}
+        setFilter={setFilter}
+      />
       {
       sortedAndSearchPosts.length !==0
       ? 
