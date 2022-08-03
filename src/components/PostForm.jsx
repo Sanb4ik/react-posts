@@ -18,7 +18,7 @@ const PostForm = ({create}) => {
     return (
         <form>
         {/* controlled */}
-        <MyInput  
+        <MyInput
           value={post.title}
           onChange={e => setPost({...post, title: e.target.value})}
           type = "text"

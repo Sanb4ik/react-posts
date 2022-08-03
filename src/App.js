@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import "./style/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 function App() {
 
   const [posts, setPosts] = useState([
@@ -10,7 +11,19 @@ function App() {
     {id: 2, title: 'JS', body: "escriptions"}
   ])
   const [selectedSort, setSlectedSort] = useState('')
-  
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const sortedPosts =  useMemo(() => {
+    if (selectedSort) { 
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    }
+    return posts
+  },[selectedSort, setSlectedSort])
+
+  const sortedAndSearchPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery))
+  },[searchQuery, sortedPosts])
+
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
@@ -20,14 +33,19 @@ function App() {
   const sortPosts = (sort)=>{
     console.log(sort)
     setSlectedSort(sort)
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
   }
 
   return (
     <div className="App">
       <PostForm create = {createPost}/>
-      <hr style={{ border: '0.5px solid cornflowerblue', magin: '15px 0'}} />
+      <hr style={{ border: '0.5px solid cornflowerblue'}} />
       <div>
+        <MyInput
+          style={{ border: '0.5px solidCornflowerblue'}}
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          placeholder="Search"
+        />
         <MySelect 
         defaultValue={'Sort by'}
         value={selectedSort}
@@ -38,9 +56,10 @@ function App() {
           ]}
         />
       </div>
-      {posts.length
+      {
+      sortedAndSearchPosts.length !==0
       ? 
-        <PostList remove = {removePost} posts={posts} title="list posts 1" />
+        <PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts 1" />
       :
         <h1 style={{textAlign: 'center'}}>
           NO posts 
