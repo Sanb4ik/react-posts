@@ -3,8 +3,10 @@ import "./style/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import PostFilter from "./components/PostFilter";
+import MyForm from "./components/UI/form/MyForm";
 import MySelect from "./components/UI/select/MySelect";
 import MyInput from "./components/UI/input/MyInput";
+import MyButton from "./components/UI/button/MyButton";
 function App() {
 
   const [posts, setPosts] = useState([
@@ -12,8 +14,8 @@ function App() {
     {id: 2, title: 'JS', body: "escriptions"}
   ])
 
-const [filter,setFilter] = useState({sort:'', query: ''})
-
+  const [filter,setFilter] = useState({sort:'', query: ''})
+  const [modal,setModal] = useState(false)
   const sortedPosts =  useMemo(() => {
     if (filter.sort) { 
       return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort].localeCompare))
@@ -27,6 +29,7 @@ const [filter,setFilter] = useState({sort:'', query: ''})
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
@@ -34,21 +37,19 @@ const [filter,setFilter] = useState({sort:'', query: ''})
 
   return (
     <div className="App">
-      <PostForm create = {createPost}/>
+      <MyButton 
+        style={{marginTop: '20px'}}
+        onClick={() => setModal(true)}
+      >Create Post</MyButton>
+      <MyForm visible={modal} setVisible={setModal}>
+        <PostForm create = {createPost}/>
+      </MyForm>
       <hr style={{ border: '0.5px solid cornflowerblue'}} />
       <PostFilter 
         filter={filter}
         setFilter={setFilter}
       />
-      {
-      sortedAndSearchPosts.length !==0
-      ? 
-        <PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts 1" />
-      :
-        <h1 style={{textAlign: 'center'}}>
-          NO posts 
-        </h1>
-      }
+      <PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts 1" />
     </div>
   ); 
 }
