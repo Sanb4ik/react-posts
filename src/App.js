@@ -9,19 +9,29 @@ import {usePosts} from "./hooks/usePost";
 import PostService from "./API/PostService";
 import MyLoader from "./components/UI/loader/MyLoader";
 import { useLoading } from "./hooks/useLoading";
+import getPageCount from "./utils/pages"
+import { usePagination } from "./hooks/usePagination";
+
 function App() {
 
   const [posts, setPosts] = useState([])
   const [filter,setFilter] = useState({sort:'', query: ''})
   const [modal,setModal] = useState(false)
+  const [totalPages,setTotalPages] = useState(10)
+  const [limit,setLimit] = useState(10)
+  const [page,setPage] = useState(1)
   const  sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query)
-
+  console.log(totalPages)
   const [fethPosts, isPostsLoading, postError] =useLoading(async()=>{
-
-    const posts = await PostService.getAll();
-    setPosts(posts)
-    
+    const response = await PostService.getAll(limit,page);
+    setPosts(response.data)
+    const totalCount = response.headers['x-total-count']
+    //console.log(totalCount)
+    setTotalPages(getPageCount(totalCount, limit))
+    console.log(totalPages)
   })
+  const pages = usePagination(totalPages)
+  console.log(pages)
   
   useEffect(() =>{
     fethPosts();
@@ -62,8 +72,7 @@ function App() {
         ?<MyLoader />
         :<PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts" />
       }
-      
-      
+      {pages.map(p =><MyButton style = {{marginRight: '5px', width: '30px'}}> {p} </MyButton>)}
     </div>
   ); 
 }
