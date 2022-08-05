@@ -8,7 +8,7 @@ const PostList = ({posts, title, remove}) => {
     }
     return (
         <div>
-            <h1 style={{textAlign: 'center'}}>
+            <h1 style={{marginTop: '10px', textAlign: 'center'}}>
                 {title}
             </h1>
                 {posts.map((post, index) =>
