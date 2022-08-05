@@ -9,6 +9,7 @@
 }
 .App{
     width: 80%;
+    font-family: Arial, sans-serif;
 }
 .post{
     display: flex;
