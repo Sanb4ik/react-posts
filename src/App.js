@@ -21,21 +21,24 @@ function App() {
   const [limit,setLimit] = useState(10)
   const [page,setPage] = useState(1)
   const  sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query)
-  console.log(totalPages)
-  const [fethPosts, isPostsLoading, postError] =useLoading(async()=>{
+
+  const [fethPosts, isPostsLoading, postError] = useLoading(async()=>{
     const response = await PostService.getAll(limit,page);
     setPosts(response.data)
     const totalCount = response.headers['x-total-count']
-    //console.log(totalCount)
     setTotalPages(getPageCount(totalCount, limit))
-    console.log(totalPages)
   })
+
   const pages = usePagination(totalPages)
   console.log(pages)
   
+  const changePage = ((p)=>{
+    setPage(p)
+  })
+
   useEffect(() =>{
     fethPosts();
-  },[filter])
+  },[filter, page])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
@@ -72,7 +75,12 @@ function App() {
         ?<MyLoader />
         :<PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts" />
       }
-      {pages.map(p =><MyButton style = {{marginRight: '5px', width: '30px'}}> {p} </MyButton>)}
+      {pages.map(p =>
+        <MyButton 
+          onClick={() => changePage(p)}
+          style = {{marginRight: '5px', width: '30px'}}> 
+          {p}
+        </MyButton>)}
     </div>
   ); 
 }
