@@ -10,7 +10,7 @@ import PostService from "./API/PostService";
 import MyLoader from "./components/UI/loader/MyLoader";
 import { useLoading } from "./hooks/useLoading";
 import getPageCount from "./utils/pages"
-import { usePagination } from "./hooks/usePagination";
+import MyPagiation from "./components/UI/pagination/MyPagiation";
 
 function App() {
 
@@ -29,9 +29,6 @@ function App() {
     setTotalPages(getPageCount(totalCount, limit))
   })
 
-  const pages = usePagination(totalPages)
-  console.log(pages)
-  
   const changePage = ((p)=>{
     setPage(p)
   })
@@ -52,7 +49,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <button onClick={fethPosts}>get</button> */}
      <MyButton 
         style={{marginTop: '20px'}}
         onClick={() => setModal(true)}
@@ -75,12 +71,7 @@ function App() {
         ?<MyLoader />
         :<PostList remove = {removePost} posts={sortedAndSearchPosts} title="list posts" />
       }
-      {pages.map(p =>
-        <MyButton 
-          onClick={() => changePage(p)}
-          style = {{marginRight: '5px', width: '30px'}}> 
-          {p}
-        </MyButton>)}
+      <MyPagiation totalPages={totalPages} changePage = {changePage}/>
     </div>
   ); 
 }
