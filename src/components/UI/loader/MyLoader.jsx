@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from './MyLoader.module.css'
-const loader = () => {
+
+const MyLoader = () => {
     return (
         <div className= {cl.loader}>
             
@@ -8,4 +9,4 @@ const loader = () => {
     );
 };
 
-export default loader;
+export default MyLoader;
