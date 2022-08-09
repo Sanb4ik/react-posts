@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import "../style/App.css";
+ import cl from "../style/App.module.css";
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
 import PostFilter from "../components/PostFilter";
@@ -11,11 +11,14 @@ import MyLoader from "../components/UI/loader/MyLoader";
 import { useLoading } from "../hooks/useLoading";
 import getPageCount from "../utils/pages"
 import MyPagiation from "../components/UI/pagination/MyPagiation";
+import { useContext } from "react";
+import {SearchAndSortContext} from "../context"
 
 function Posts() {
-
+  const {filter, setFilter} = useContext(SearchAndSortContext);
+  console.log(filter);
   const [posts, setPosts] = useState([])
-  const [filter,setFilter] = useState({sort:'', query: ''})
+  // const [filter,setFilter] = useState({sort:'', query: ''})
   const [modal,setModal] = useState(false)
   const [totalPages,setTotalPages] = useState(10)
   const [limit,setLimit] = useState(10)
@@ -48,7 +51,7 @@ function Posts() {
   }
 
   return (
-    <div className="App">
+    <div>
      <MyButton 
         style={{marginTop: '20px'}}
         onClick={() => setModal(true)}

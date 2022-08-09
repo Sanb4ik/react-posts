@@ -1,16 +1,16 @@
 import React from 'react';
 import MyButton from './UI/button/MyButton';
 import { Link } from 'react-router-dom';
-
+import cl from '../style/App.module.css'
 const PostItem = (props) =>{
 
   return (
-    <div className="post">
-      <div className="post__content">
+    <div className={cl.post}>
+      <div >
         <strong>{props.post.id}. {props.post.title}</strong>
         <div>{props.post.body}</div>
       </div>
-      <div className="post__btn">
+      <div >
       
       <Link to={`/post/${props.post.id}`}>
         <MyButton style={{marginRight: "10px"}}>
