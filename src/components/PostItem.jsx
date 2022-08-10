@@ -6,11 +6,11 @@ const PostItem = (props) =>{
 
   return (
     <div className={cl.post}>
-      <div >
+      <div style={{width: '80%'}}>
         <strong>{props.post.id}. {props.post.title}</strong>
         <div>{props.post.body}</div>
       </div>
-      <div >
+      <div  style={{width: 'min-content'}}>
       
       <Link to={`/post/${props.post.id}`}>
         <MyButton style={{marginRight: "10px"}}>

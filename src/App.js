@@ -16,12 +16,12 @@ import {
 
 const App = () => {
   const [filter,setFilter] = useState({sort:'', query: ''})
-
+  const [modal,setModal] = useState(false)
   return (
     <SearchAndSortContext.Provider
-    value = {{filter, setFilter}}>
+    value = {{filter, setFilter, modal, setModal}}>
       <div>
-        <Navbar_ />
+        <Navbar_/>
         <div className={cl.AppContainer}>
           <div className={cl.App}>
             <Routes>

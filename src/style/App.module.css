@@ -1,6 +1,6 @@
 .App{
     width: 80%;
-    background-color: rgb(228, 228, 228);
+    background-color: rgb(247, 247, 247);
    
 }
 
@@ -23,9 +23,10 @@
     width: 90%;
     display: flex;
     padding: 15px;
-    border: 2px solid rgb(43, 135, 0);
-    background-color: rgba(200, 200,200);
+    border-radius: 5px;
+    border: 2px solid rgb(200, 200, 200);
+    background-color: rgb(230, 230, 230);
     margin-top: 10px;
-    justify-content: space-between;
+    justify-content:space-evenly;
     align-items: center;
 }

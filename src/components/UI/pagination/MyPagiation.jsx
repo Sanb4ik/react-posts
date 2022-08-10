@@ -5,7 +5,7 @@ import { usePagination } from '../../../hooks/usePagination';
 const MyPagiation = ({totalPages, changePage}) => {
     const pages = usePagination(totalPages)
     return (
-        <div>
+        <div style={{marginLeft:"5%"}}>
             {pages.map(p =>
         <MyButton 
           onClick={() => changePage(p)}

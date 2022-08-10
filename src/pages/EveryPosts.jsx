@@ -15,11 +15,11 @@ import { useContext } from "react";
 import {SearchAndSortContext} from "../context"
 
 function Posts() {
-  const {filter, setFilter} = useContext(SearchAndSortContext);
+  const {filter, setFilter, modal, setModal} = useContext(SearchAndSortContext);
   console.log(filter);
   const [posts, setPosts] = useState([])
   // const [filter,setFilter] = useState({sort:'', query: ''})
-  const [modal,setModal] = useState(false)
+
   const [totalPages,setTotalPages] = useState(10)
   const [limit,setLimit] = useState(10)
   const [page,setPage] = useState(1)
@@ -52,16 +52,10 @@ function Posts() {
 
   return (
     <div>
-     <MyButton 
-        style={{marginTop: '20px'}}
-        onClick={() => setModal(true)}
-      >
-        Create Post
-      </MyButton>
-      <PostFilter
+      {/* <PostFilter
         filter={filter}
         setFilter={setFilter}
-      />
+      /> */}
       <MyForm visible={modal} setVisible={setModal}>
         <PostForm create = {createPost}/>
       </MyForm>

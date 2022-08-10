@@ -11,7 +11,6 @@ const PostForm = ({create}) => {
             ...post, id: Date.now()
         }
         create(newPost);
-        //setPosts([...posts, {...post, id: Date.now()}])
         setPost({title: '', body: ''})
       }
 
